@@ -3,11 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = idioDev;
+Object.defineProperty(exports, "watchBundles", {
+  enumerable: true,
+  get: function () {
+    return _browserify.watch;
+  }
+});
 
-/**
- * This is the main package file.
- */
-async function idioDev() {
-  console.log('idio-dev called');
-}
+var _browserify = require("./browserify");
