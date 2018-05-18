@@ -18,7 +18,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 const watch = async ({
   from,
-  to
+  to,
+  browserify = {},
+  babelify = {}
 }) => {
   const {
     content
@@ -28,13 +30,17 @@ const watch = async ({
       type
     } = content[k];
     return type == 'File';
+  }).filter(k => {
+    return /\.js(x|on)?$/.test(k);
   });
   files.forEach(name => {
     const path = (0, _path.resolve)(from, name);
     const output = (0, _path.resolve)(to, name);
     (0, _watch.default)({
       path,
-      output
+      output,
+      options: browserify,
+      babelifyOptions: babelify
     });
   });
 };

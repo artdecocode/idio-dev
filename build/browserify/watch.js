@@ -19,27 +19,39 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var _default = ({
   path,
-  output
+  output,
+  options = {},
+  babelifyOptions = {},
+  ignore,
+  exclude
 }) => {
+  const p = (0, _path.relative)('', path);
+  const o = (0, _path.relative)('', output);
+
+  const babel = _babelify.default.configure(babelifyOptions);
+
   const b = (0, _browserify.default)({
     entries: [path],
     cache: {},
     packageCache: {},
     plugin: [_watchify.default],
     debug: true,
-    transform: [_babelify.default],
-    extensions: ['.jsx']
+    transform: [babel],
+    extensions: ['.jsx'],
+    ...options
   });
   b.on('update', bundle).on('bundle', () => {
-    console.log('⇢ %s bundled to %s', (0, _path.relative)('', path), (0, _path.relative)('', output));
+    console.log('⇢ %s bundled to %s', p, o);
   });
+  if (ignore) b.ignore(ignore);
+  if (exclude) b.exclude(exclude);
   bundle();
 
   function bundle() {
     b.bundle().on('error', ({
       message
     }) => {
-      console.log('[!] Bundle error: %s', message);
+      console.log('[!] %s bundle error: %s', p, message);
     }).pipe((0, _fs.createWriteStream)(output));
   }
 };
