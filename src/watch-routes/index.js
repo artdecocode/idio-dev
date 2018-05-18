@@ -20,7 +20,7 @@ const findChildrenInCache = (dir, file) => {
 /**
  * Watch routes.
  */
-export default (methods, dir, router, defaultImports, aliases) => {
+export default ({ dir, methods, router, defaultImports, aliases }) => {
   if (!fsevents) {
     throw new Error('fsevetns is not installed')
   }
