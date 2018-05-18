@@ -14,6 +14,6 @@ export const watch = async ({ from, to }) => {
   files.forEach((name) => {
     const path = resolve(from, name)
     const output = resolve(to, name)
-    w({ path, output, name })
+    w({ path, output })
   })
 }

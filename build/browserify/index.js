@@ -34,8 +34,7 @@ const watch = async ({
     const output = (0, _path.resolve)(to, name);
     (0, _watch.default)({
       path,
-      output,
-      name
+      output
     });
   });
 };

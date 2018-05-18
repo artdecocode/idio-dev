@@ -5,9 +5,8 @@ import { createWriteStream } from 'fs'
 import { relative } from 'path'
 
 export default ({
-  path, output, name = path, home = '',
+  path, output,
 }) => {
-  const r = relative(home, output)
   const b = browserify({
     entries: [path],
     cache: {},
@@ -15,19 +14,22 @@ export default ({
     plugin: [watchify],
     debug: true,
     transform: [babelify],
+    extensions: ['.jsx'],
   })
 
   b
     .on('update', bundle)
     .on('bundle', () => {
-      console.log('%s bundled to %s', name, r)
+      console.log('⇢ %s bundled to %s', relative('', path), relative('', output))
     })
 
   bundle()
 
   function bundle() {
     b.bundle()
-      .on('error', ({ message }) => console.log(message))
+      .on('error', ({ message }) => {
+        console.log('[!] Bundle error: %s', message)
+      })
       .pipe(createWriteStream(output))
   }
 }
