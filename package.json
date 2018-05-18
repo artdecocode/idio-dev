@@ -38,5 +38,13 @@
     "eslint-config-artdeco": "1.0.0",
     "yarn-s": "1.1.0",
     "zoroaster": "2.0.0"
+  },
+  "dependencies": {
+    "babelify": "babel/babelify#3c10e0c",
+    "browserify": "16.2.2",
+    "watchify": "3.11.0"
+  },
+  "optionalDependencies": {
+    "fsevents": "1.2.4"
   }
 }
