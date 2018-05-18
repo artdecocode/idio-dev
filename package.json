@@ -49,6 +49,6 @@
     "fsevents": "1.2.4"
   },
   "peerDependencies": {
-    "idio": "2.4.0"
+    "idio": "2.5.0"
   }
 }
