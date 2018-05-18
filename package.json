@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "e": "node example",
     "example/": "yarn e example/example.js",
-    "build": "babel src --out-dir build"
+    "build": "babel src --out-dir build --source-maps"
   },
   "repository": {
     "type": "git",

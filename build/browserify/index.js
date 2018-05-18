@@ -46,3 +46,4 @@ const watch = async ({
 };
 
 exports.watch = watch;
+//# sourceMappingURL=index.js.map
