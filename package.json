@@ -47,5 +47,8 @@
   },
   "optionalDependencies": {
     "fsevents": "1.2.4"
+  },
+  "peerDependencies": {
+    "idio": "2.4.0"
   }
 }
