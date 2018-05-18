@@ -1,12 +1,18 @@
 # idio-dev
 
+[![npm version](https://badge.fury.io/js/idio-dev.svg)](https://badge.fury.io/js/idio-dev)
+
+```sh
+yarn add -E -D idio-dev
+```
+
 `idio-dev` is a new Node.js npm package.
 
 Development tools for idio.
 
 ## `watchBundles`
 
-Make and watch `browserify` bundles.
+Make and watch `browserify` bundles. This produces source maps and does not minify output, so that it's useful in development. To build production bundles, use `buildBundles`.
 
 ```js
 import { watchBundles } from 'idio-dev'
