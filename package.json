@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "e": "node example",
     "example/": "yarn e example/example.js",
-    "build": "babel src --out-dir build --source-maps"
+    "build": "babel src --out-dir build --source-maps",
+    "build-watch": "babel src --out-dir build --source-maps -w"
   },
   "repository": {
     "type": "git",

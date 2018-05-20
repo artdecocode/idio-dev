@@ -17,23 +17,44 @@ const findChildrenInCache = (dir, file) => {
   return res
 }
 
+const getDisplayPath = (url, route) => {
+  return `${url}${route}`
+}
+
+const pad = (key, maxLength) => {
+  const length = maxLength - key.length
+  const a = Array.from({ length }).map(a => ' ').join('')
+  return `${key}${a}`
+}
+
+const grey = (t) => {
+  return `\x1b[90m${t}\x1b[0m`
+}
+
 /**
  * Watch routes.
  */
-export default ({ dir, methods, router, defaultImports, aliases }) => {
+export default ({ dir, methods, router, defaultImports = true, aliases = {}, url = '' }) => {
   if (!fsevents) {
     throw new Error('fsevetns is not installed')
   }
   Object.keys(methods).forEach((m) => {
     const method = methods[m]
     const keys = Object.keys(method)
+    const { length: longestKey } = keys.reduce((acc, k) => {
+      if (k.length > acc.length)
+        return k
+      return acc
+    }, '')
     keys.forEach(key => {
+      const d = getDisplayPath(url, key)
+
       const { path } = method[key]
       const watcher = fsevents(path)
-      log('watching %s', relative('', path))
-
+      log('%s', pad(d, longestKey + url.length))
+      log('  %s', relative('', path))
       watcher.on('modified', () => {
-        log('updated %s', relative('', path))
+        log('⌁ %s', relative('', path))
         onChange(path, dir, router, defaultImports, aliases)
       })
       watcher.start()
@@ -43,9 +64,9 @@ export default ({ dir, methods, router, defaultImports, aliases }) => {
         return !/node_modules/.test(c)
       }).forEach((c) => {
         const w = fsevents(c)
-        log('watching dependency %s', relative('', c))
+        log('  %s', grey(relative('', c)))
         w.on('modified', (p) => {
-          log('updated dependency %s of %s', relative('', p), relative('', path))
+          log('⌁ %s', grey(relative('', p)))
           onChange(path, dir, router, defaultImports, aliases)
         })
         w.start()
@@ -82,5 +103,5 @@ const onChange = (path, dir, router, defaultImports, aliases) => {
     return aliasName
   })
 
-  console.log('> hot reloaded %s (%s)', name, reloadedAliases.join(', '))
+  console.log('> hot reloaded %s %s', name, reloadedAliases.length ? `${reloadedAliases.join(', ')}` : '')
 }
